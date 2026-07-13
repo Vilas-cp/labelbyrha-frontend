@@ -30,5 +30,4 @@ export const footerLinkColumns = [
 export const socialLinks = [
   { label: "Instagram", href: "https://instagram.com" },
   { label: "Pinterest", href: "https://pinterest.com" },
-  { label: "TikTok", href: "https://tiktok.com" },
 ] as const;

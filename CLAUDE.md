@@ -220,6 +220,8 @@ This project uses **Tailwind CSS v4** (CSS-first). There is no `tailwind.config.
 - Use file-based conventions for SEO assets: `robots.ts`, `sitemap.ts`, `opengraph-image`, favicons — extend the existing ones in `src/app/`, don't build a manual alternative.
 - Dynamic route params are async (`params: Promise<{...}>`) — always `await` them. Confirm current API shape against `node_modules/next/dist/docs` for the installed version before assuming behavior from training data.
 - Server Actions (if used for mutations) belong close to the feature that owns them and must validate input with Zod before touching any backend call.
+- For a dynamic route backed by a mock catalog known at build time (e.g. `/products/[slug]`), add `generateStaticParams` (mapping over the mock array) so the pages are SSG rather than always dynamic — see `src/app/products/[slug]/page.tsx`. Look up the entity with a `get<Entity>BySlug`-style helper in the relevant `services/` module and call `notFound()` (from `next/navigation`) when it's missing, rather than rendering an empty/broken page.
+- Also call `generateMetadata` on every dynamic route using the same lookup, returning `{}` when the entity isn't found (the page itself still calls `notFound()`).
 
 ---
 
@@ -228,6 +230,7 @@ This project uses **Tailwind CSS v4** (CSS-first). There is no `tailwind.config.
 - All HTTP calls go through `src/services/api-client.ts` (`apiClient.get/post/put/delete`). Never call `fetch` directly from a component.
 - Group domain-specific calls into their own service modules under `src/services/` (e.g. `services/products.ts`, `services/cart.ts`), each exposing typed functions that call `apiClient` and return data validated/shaped by a Zod schema.
 - **Until a real backend exists**, a service module may export a mock dataset plus a pure, synchronous query function shaped like the future endpoint (see `services/products.ts`'s `mockProducts` + `queryProducts(query): { items, total, totalPages, page }`) — same input/output contract a real paginated/filtered API would have, so swapping in a real `apiClient` call later only touches that one file. Don't reach for TanStack Query around a synchronous in-memory mock; that's only needed once there's an actual network round trip.
+- Keep the core mock record lean and derive presentation-only content (extra gallery images, marketing copy, detail bullets) via small pure helper functions in the same service module (e.g. `getProductImages`, `getProductDescription`, `getProductDetails` in `services/products.ts`) rather than hand-authoring that content per record — cheaper to maintain across a growing catalog and just as easy to replace with real CMS/API data later.
 - Client-side data fetching and mutations go through **TanStack Query**: colocate `useQuery`/`useMutation` hooks in the relevant service module (e.g. `services/products.ts` exports `useProducts()`), not ad hoc inside components.
 - Query keys must be structured and centralized (e.g. a `queryKeys.products.list(filters)` factory) — no magic string keys scattered across the codebase.
 - Server Components fetching initial data may call service functions directly (no TanStack Query needed server-side); hydrate into TanStack Query only when the client needs to re-fetch/mutate that same data.

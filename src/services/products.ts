@@ -1,5 +1,11 @@
 import { PRODUCTS_PER_PAGE } from "@/constants/shop";
-import type { Product, ProductQuery, ProductQueryResult } from "@/types/product";
+import type {
+  Product,
+  ProductCategory,
+  ProductImage,
+  ProductQuery,
+  ProductQueryResult,
+} from "@/types/product";
 
 /**
  * Mock product catalog. Replace with a real API call (via `apiClient`) once
@@ -373,4 +379,52 @@ export function queryProducts(query: ProductQuery = {}): ProductQueryResult {
     totalPages,
     page: safePage,
   };
+}
+
+export function getProductBySlug(slug: string): Product | undefined {
+  return mockProducts.find((product) => product.slug === slug);
+}
+
+export function getProductImages(product: Product): ProductImage[] {
+  return [
+    { src: product.imageSrc, alt: product.imageAlt },
+    {
+      src: `https://picsum.photos/seed/${product.slug}-detail-1/900/1125`,
+      alt: `${product.name} detail view`,
+    },
+    {
+      src: `https://picsum.photos/seed/${product.slug}-detail-2/900/1125`,
+      alt: `${product.name} alternate view`,
+    },
+    {
+      src: `https://picsum.photos/seed/${product.slug}-detail-3/900/1125`,
+      alt: `${product.name} styled view`,
+    },
+  ];
+}
+
+const categoryDescriptions: Record<ProductCategory, string> = {
+  Dresses:
+    "A flowing silhouette cut from a soft, breathable fabric that moves with you — equally at home on a weekday lunch or a summer evening out.",
+  Tops:
+    "A versatile layering piece with a considered drape, designed to sit effortlessly under a blazer or worn on its own with tailored trousers.",
+  Bottoms:
+    "A tailored fit with just the right amount of ease, made from a fabric that holds its shape wear after wear.",
+  Outerwear:
+    "A statement outer layer built for cooler days, balancing structure with a soft, comfortable hand-feel.",
+  Accessories:
+    "A finishing touch crafted from quality materials, designed to complement the rest of your wardrobe for seasons to come.",
+};
+
+export function getProductDescription(product: Product): string {
+  return categoryDescriptions[product.category];
+}
+
+export function getProductDetails(): string[] {
+  return [
+    "Thoughtfully designed and cut for a considered, flattering fit",
+    "Made from responsibly sourced materials",
+    "Dry clean or gentle hand wash recommended",
+    "Designed in-house, produced in small batches",
+  ];
 }

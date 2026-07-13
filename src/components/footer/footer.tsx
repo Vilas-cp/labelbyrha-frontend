@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/common/container";
+import { Logo } from "@/components/common/logo";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/constants/site";
 import { NewsletterForm } from "./newsletter-form";
@@ -30,8 +31,8 @@ function Footer({ linkColumns, socialLinks }: FooterProps) {
       <Container className="flex flex-col gap-10 py-16">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col gap-4 lg:col-span-1">
-            <Link href="/" className="font-heading text-xl text-foreground">
-              {siteConfig.name}
+            <Link href="/">
+              <Logo />
             </Link>
             <p className="max-w-xs text-sm text-muted-foreground">
               {siteConfig.description}

@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Container } from "@/components/common/container";
-import { siteConfig } from "@/constants/site";
+import { Logo } from "@/components/common/logo";
 
 interface NavLink {
   label: string;
@@ -33,8 +33,8 @@ function Navbar({ links = [] }: NavbarProps) {
             </SheetTrigger>
             <SheetContent side="left" className="w-72">
               <SheetHeader>
-                <SheetTitle className="font-heading text-xl">
-                  {siteConfig.name}
+                <SheetTitle>
+                  <Logo />
                 </SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col gap-1 px-4">
@@ -52,11 +52,8 @@ function Navbar({ links = [] }: NavbarProps) {
           </Sheet>
         </div>
 
-        <Link
-          href="/"
-          className="font-heading text-xl tracking-wide text-foreground lg:flex-1"
-        >
-          {siteConfig.name}
+        <Link href="/" className="lg:flex-1">
+          <Logo />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

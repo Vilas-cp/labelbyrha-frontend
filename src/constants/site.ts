@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: "Lablebyrha",
-  title: "Lablebyrha | Premium Women's Fashion",
+  name: "LABELBYRHA",
+  title: "LABELBYRHA | Premium Women's Fashion",
   description:
-    "Lablebyrha is a premium women's fashion label offering clean, minimal, and elegant clothing designed to last.",
+    "LABELBYRHA is a premium women's fashion label offering clean, minimal, and elegant clothing designed to last.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   ogImage: "/og-image.png",
   keywords: [

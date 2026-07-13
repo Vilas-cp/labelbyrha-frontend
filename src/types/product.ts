@@ -8,6 +8,11 @@ export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];
 export type ProductSize = (typeof PRODUCT_SIZES)[number];
 export type SortOption = (typeof SORT_OPTIONS)[number]["value"];
 
+export interface ProductImage {
+  src: string;
+  alt: string;
+}
+
 export interface Product {
   id: string;
   slug: string;
