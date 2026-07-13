@@ -15,17 +15,21 @@ interface LogoProps {
 
 function Logo({ className }: LogoProps) {
   return (
-    <span
-      className={cn(
-        playfairDisplay.className,
-        "inline-flex text-xl uppercase tracking-[0.06em]",
-        className,
-      )}
-    >
-      <span style={{ color: LOGO_BASE_COLOR }}>LABEL BYR</span>
-      <span style={{ color: LOGO_HIGHLIGHT_COLOR }}>H</span>
-      <span style={{ color: LOGO_BASE_COLOR }}>A</span>
-    </span>
+   <span
+  className={cn(
+    playfairDisplay.className,
+    "uppercase tracking-[0.06em] flex flex-col md:flex-row",
+    className
+  )}
+>
+  <span style={{ color: LOGO_BASE_COLOR }}>{"LABEL"}</span>
+
+  <span className="whitespace-nowrap">
+    <span style={{ color: LOGO_BASE_COLOR }}>BYR</span>
+    <span style={{ color: LOGO_HIGHLIGHT_COLOR }}>H</span>
+    <span style={{ color: LOGO_BASE_COLOR }}>A</span>
+  </span>
+</span>
   );
 }
 
